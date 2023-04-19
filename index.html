@@ -9,18 +9,28 @@
     <title>Interactions</title>
   </head>
   <body>
-    <form>
-      <label for="searchField">Search movie by name</label>
-      <input
-        type="text"
-        name=""
-        id="searchField"
-        placeholder="enter something" />
-      <button type="submit">Button</button>
-    </form>
+    <main>
+      <form>
+        <label for="searchField">Search movie by name</label>
+        <input
+          type="text"
+          name=""
+          id="searchField"
+          placeholder="enter something" />
+        <button type="submit">Button</button>
+        <button class="btn show-trending__btn" type="button">
+          Show trending
+        </button>
+        <button class="btn hide-trending__btn" type="button" disabled>
+          Hide trending
+        </button>
+      </form>
 
-    <div class="container">Test</div>
-
+      <div class="container">
+        <ul class="search-results"></ul>
+        <div class="detailed-info"></div>
+      </div>
+    </main>
     <script type="module" src="./js/script.js"></script>
   </body>
 </html>

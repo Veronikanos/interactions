@@ -1,5 +1,5 @@
-import {insertMarkup, showTitleForListOfResults} from './utils.js';
-import {showInvitedBtn} from './invitedGuests.js';
+// import {insertMarkup, showTitleForListOfResults} from './utils.js';
+// import {showInvitedBtn} from './invitedGuests.js';
 import {jsonApi} from './initPage.js';
 
 const handleFormSubmit = async (e) => {
@@ -8,13 +8,14 @@ const handleFormSubmit = async (e) => {
   const query = e.target.formInput.value;
 
   if (!query) {
+    alert('empty input');
     console.log('empty input');
     return;
   }
 
   try {
-    const results = await jsonApi.addUser(query.trim().toLowerCase());
-    console.log(results);
+    const result = await jsonApi.addUser(query.trim().toLowerCase());
+    console.log(result);
 
     // const res = await jsonApi.getUsers();
     // console.log(res);
@@ -22,13 +23,22 @@ const handleFormSubmit = async (e) => {
     //   console.log('No results, try another one');
     //   return;
     // }
-    insertMarkup(jsonApi.guestsList);
 
-    // clear input field and make active "show trending" button
+    // const generateNextId = jsonApi.guestsList.length;
+
+    // console.log(jsonApi.guestsList.length);
+    const showTrendingContainer =
+      document.querySelector('.search-results');
+
+    const generateNextId =
+      showTrendingContainer.childElementCount + 1;
+
+    showTrendingContainer.insertAdjacentHTML(
+      'beforeend',
+      `<li id=${generateNextId}>${result.name}</li>`
+    );
+
     document.querySelector('#searchField').value = '';
-    // showInvitedBtn.disabled = false;
-
-    // showTitleForListOfResults();
   } catch (error) {
     throw new Error(error);
   }

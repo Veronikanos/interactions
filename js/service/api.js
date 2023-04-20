@@ -18,7 +18,6 @@ class JSONPlaceholderAPI {
   }
 
   async post(path, data) {
-    console.log(data);
     const response = await fetch(`${this.baseUrl}${path}`, {
       method: 'POST',
       headers: {
@@ -27,10 +26,9 @@ class JSONPlaceholderAPI {
       body: JSON.stringify({name: data}),
     });
     if (!response.ok) {
-      throw new Error(`Error with status:  ${response.status}`);
+      throw new Error(`Error with status: ${response.status}`);
     }
     const res = await response.json();
-    console.log(res);
     return res;
   }
 }
@@ -46,9 +44,12 @@ export class Guests extends JSONPlaceholderAPI {
   }
 
   addGuest(newGuest) {
-    // console.log(newGuest);
-    this.allGuests.push(newGuest);
-    console.log(this.guestsList);
+    console.log(newGuest);
+    const user = {
+      name: newGuest.name,
+      id: newGuest.id,
+    };
+    this.allGuests.push(user);
   }
 
   // removeGuest(id) {
@@ -59,9 +60,6 @@ export class Guests extends JSONPlaceholderAPI {
 
   async getUsers() {
     const result = await this.get('/users');
-
-    // this.addGuest = [...result];
-
     result.forEach((user) => this.addGuest(user));
     console.log(this.guestsList);
     return this.guestsList;
@@ -77,9 +75,13 @@ export class Guests extends JSONPlaceholderAPI {
   async addUser(body = null) {
     console.log(body);
     const user = await this.post('/users', body);
-    this.addGuest(body);
-    console.log(this.guestsList);
+    console.log(user);
+    this.addGuest(user);
     return user;
-    // return await this.post('/users', body);
+  }
+
+  async getUserPosts(userId) {
+    const posts = await this.get(`/users/${userId}/posts`);
+    return posts;
   }
 }

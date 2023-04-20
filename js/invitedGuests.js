@@ -6,6 +6,20 @@ export const showInvitedBtn = document.querySelector(
   '.show-invited__btn'
 );
 
+export const handleClickToUserItem = async (e) => {
+  e.preventDefault();
+
+  const getIdFromClickedElement = e.target.closest('li').id;
+  console.log(getIdFromClickedElement);
+
+  try {
+    const res = await jsonApi.getUserPosts(getIdFromClickedElement);
+    console.log(res);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 const handleShowGuestsList = async () => {
   // e.preventDefault();
   // showInvitedBtn.disabled = true;
@@ -17,7 +31,16 @@ const handleShowGuestsList = async () => {
     //   console.log('Empty...');
     //   return;
     // }
-    insertMarkup(results);
+    const usersContainerElement =
+      document.querySelector('.search-results');
+
+    const markup = insertMarkup(results);
+    usersContainerElement.innerHTML = markup.join('');
+
+    usersContainerElement.addEventListener(
+      'click',
+      handleClickToUserItem
+    );
 
     // showTitleForListOfResults('trending');
 

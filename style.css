@@ -1,0 +1,11 @@
+li {
+  padding: 10px;
+  background-color: darkcyan;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  flex: 1 1 auto;
+}

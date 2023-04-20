@@ -1,10 +1,11 @@
+import {Guests} from './service/api.js';
 import {insertMarkup} from './utils.js';
-// import {showTitleForListOfResults} from './utils.js';
-import {jsonApi} from './initPage.js';
 
-export const showInvitedBtn = document.querySelector(
-  '.show-invited__btn'
-);
+export const jsonApi = new Guests();
+
+// export const showInvitedBtn = document.querySelector(
+//   '.show-invited__btn'
+// );
 
 export const handleClickToUserItem = async (e) => {
   e.preventDefault();
@@ -13,40 +14,39 @@ export const handleClickToUserItem = async (e) => {
   console.log(getIdFromClickedElement);
 
   try {
-    const res = await jsonApi.getUserPosts(getIdFromClickedElement);
-    console.log(res);
+    const results = await jsonApi.getUserPosts(
+      getIdFromClickedElement
+    );
+    const feedbacksContainerElement =
+      document.querySelector('.detailed-info');
+
+    if (!results.length) {
+      feedbacksContainerElement.innerHTML = 'No feedbacks yet';
+    }
+
+    console.log(results);
+
+    const markup = insertMarkup(results);
+    feedbacksContainerElement.innerHTML = markup.join('');
   } catch (error) {
     throw new Error(error);
   }
 };
 
 const handleShowGuestsList = async () => {
-  // e.preventDefault();
-  // showInvitedBtn.disabled = true;
-
   try {
     const results = await jsonApi.getUsers();
-    console.log(results);
-    // if (!results.length) {
-    //   console.log('Empty...');
-    //   return;
-    // }
+    // console.log(results);
     const usersContainerElement =
       document.querySelector('.search-results');
 
-    const markup = insertMarkup(results);
+    const markup = insertMarkup(results, 'users');
     usersContainerElement.innerHTML = markup.join('');
 
     usersContainerElement.addEventListener(
       'click',
       handleClickToUserItem
     );
-
-    // showTitleForListOfResults('trending');
-
-    console.log(results);
-
-    // hideTrendingBtn.disabled = false;
   } catch (error) {
     console.log('oops');
   }
@@ -68,7 +68,4 @@ const handleShowGuestsList = async () => {
   // });
   // hideTrendingBtn.disabled = false;
 };
-
-handleShowGuestsList();
-
-// showInvitedBtn.addEventListener('click', handleShowGuestsList);
+window.addEventListener('DOMContentLoaded', handleShowGuestsList());

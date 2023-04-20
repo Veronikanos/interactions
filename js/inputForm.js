@@ -1,6 +1,4 @@
-// import {insertMarkup, showTitleForListOfResults} from './utils.js';
-// import {showInvitedBtn} from './invitedGuests.js';
-import {jsonApi} from './initPage.js';
+import {jsonApi} from './invitedGuests.js';
 
 const handleFormSubmit = async (e) => {
   e.preventDefault();
@@ -17,16 +15,6 @@ const handleFormSubmit = async (e) => {
     const result = await jsonApi.addUser(query.trim().toLowerCase());
     console.log(result);
 
-    // const res = await jsonApi.getUsers();
-    // console.log(res);
-    // if (!results.length) {
-    //   console.log('No results, try another one');
-    //   return;
-    // }
-
-    // const generateNextId = jsonApi.guestsList.length;
-
-    // console.log(jsonApi.guestsList.length);
     const showTrendingContainer =
       document.querySelector('.search-results');
 
@@ -45,5 +33,5 @@ const handleFormSubmit = async (e) => {
 };
 
 const searchForm = document.querySelector('.searchForm');
-console.log(searchForm);
+
 searchForm.addEventListener('submit', handleFormSubmit);

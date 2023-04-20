@@ -1,8 +1,10 @@
-export const insertMarkup = (res) => {
+export const insertMarkup = (res, type) => {
   const markup = [];
   res.map((data, index) => {
     markup.push(
-      `<li id=${index + 1}>${data.name}</li>`
+      `<li id=${index + 1}>${
+        type === 'users' ? data.name : data.body
+      }</li>`
       //  markup.push(`<li id=${movie.id}>${movie.title}
     );
   });

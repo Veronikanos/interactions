@@ -1,3 +1,5 @@
+import {CustomError} from '../errors.js';
+
 class JSONPlaceholderAPI {
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
@@ -5,31 +7,39 @@ class JSONPlaceholderAPI {
   }
 
   async get(path) {
-    const response = await fetch(`${this.baseUrl}${path}`);
+    try {
+      const response = await fetch(`${this.baseUrl}${path}`);
 
-    // console.log(response);
-    if (!response.ok) {
-      throw new Error(`Error with status: ${response.status}`);
+      if (!response.ok) {
+        throw new Error(`Error with status: ${response.status}`);
+      }
+
+      const res = await response.json();
+      return res;
+    } catch (error) {
+      console.error(error);
+      throw new CustomError();
     }
-
-    const res = await response.json();
-    // console.log(res);
-    return res;
   }
 
   async post(path, data) {
-    const response = await fetch(`${this.baseUrl}${path}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({name: data}),
-    });
-    if (!response.ok) {
-      throw new Error(`Error with status: ${response.status}`);
+    try {
+      const response = await fetch(`${this.baseUrl}${path}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({name: data}),
+      });
+      if (!response.ok) {
+        throw new Error(`Error with status: ${response.status}`);
+      }
+      const res = await response.json();
+      return res;
+    } catch (error) {
+      console.error(error);
+      throw new CustomError();
     }
-    const res = await response.json();
-    return res;
   }
 }
 
@@ -44,7 +54,6 @@ export class Guests extends JSONPlaceholderAPI {
   }
 
   addGuest(newGuest) {
-    console.log(newGuest);
     const user = {
       name: newGuest.name,
       id: newGuest.id,
@@ -52,36 +61,35 @@ export class Guests extends JSONPlaceholderAPI {
     this.allGuests.push(user);
   }
 
-  // removeGuest(id) {
-  //   this.allGuests = this.allGuests.filter(
-  //     (guest) => guest.id !== id
-  //   );
-  // }
-
   async getUsers() {
-    const result = await this.get('/users');
-    result.forEach((user) => this.addGuest(user));
-    console.log(this.guestsList);
-    return this.guestsList;
+    try {
+      const result = await this.get('/users');
+      result.forEach((user) => this.addGuest(user));
+      return this.guestsList;
+    } catch (error) {
+      console.error(error);
+      throw new CustomError();
+    }
   }
 
-  // async getPosts() {
-  //   return await this.get('/posts');
-  // }
-  // async getComments() {
-  //   return await this.get('/comments');
-  // }
-
   async addUser(body = null) {
-    console.log(body);
-    const user = await this.post('/users', body);
-    console.log(user);
-    this.addGuest(user);
-    return user;
+    try {
+      const user = await this.post('/users', body);
+      this.addGuest(user);
+      return user;
+    } catch (error) {
+      console.error(error);
+      throw new CustomError();
+    }
   }
 
   async getUserPosts(userId) {
-    const posts = await this.get(`/users/${userId}/posts`);
-    return posts;
+    try {
+      const posts = await this.get(`/users/${userId}/posts`);
+      return posts;
+    } catch (error) {
+      console.error(error);
+      throw new CustomError();
+    }
   }
 }

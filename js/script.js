@@ -1,4 +1,3 @@
-import './initPage.js';
 import './invitedGuests.js';
 import './inputForm.js';
 

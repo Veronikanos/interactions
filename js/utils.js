@@ -1,3 +1,5 @@
+import {movieApi} from './script.js';
+
 export const handleClickToMovieItem = (e) => {
   e.preventDefault();
 

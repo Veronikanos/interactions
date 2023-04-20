@@ -1,3 +1,17 @@
+export const handleClickToMovieItem = (e) => {
+  e.preventDefault();
+
+  const getIdFromClickedElement = e.target.closest('li').id;
+  console.log(getIdFromClickedElement);
+
+  try {
+    const res = movieApi.getMovieDetailsByID(getIdFromClickedElement);
+    console.log(res);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 export const insertMarkup = (res) => {
   const showTrendingContainer =
     document.querySelector('.search-results');
@@ -7,18 +21,30 @@ export const insertMarkup = (res) => {
 
   const markup = [];
   res.map((movie) => {
-    // markup.push(`<li id=${movie.id}><a href=''>${movie.title}</a>
-    markup.push(`<li id=${movie.id}>${movie.title}
-		</li>`);
+    markup.push(
+      `<li id=${movie.id}><a href=''>${movie.title}</a></li>`
+      //  markup.push(`<li id=${movie.id}>${movie.title}
+    );
   });
 
   showTrendingContainer.innerHTML = markup.join('');
+
+  showTrendingContainer.addEventListener(
+    'click',
+    handleClickToMovieItem
+  );
 };
 
-// export const checkResponse = (res) => {
-//   if (!res.length) {
-//     console.log('No results, try another one');
-//     return;
-//   }
-//   insertMarkup(res);
-// };
+export const showTitleForListOfResults = (type) => {
+  // show title for searched list
+  const searchedListTitle = document.querySelector(
+    '.searched-list-title'
+  );
+
+  let title =
+    type === 'trending'
+      ? 'Trending movies of the day:'
+      : 'Results for your query:';
+
+  searchedListTitle.innerHTML = title;
+};

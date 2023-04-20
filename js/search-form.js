@@ -1,7 +1,8 @@
 import {MovieByTitle} from './service/api.js';
-import {insertMarkup} from './utils.js';
+import {insertMarkup, showTitleForListOfResults} from './utils.js';
+import {showTrendingBtn} from './trending-movies.js';
 
-const searchField = document.querySelector('.searchForm');
+const searchForm = document.querySelector('.searchForm');
 const movieByTitle = new MovieByTitle();
 
 const handleFormSubmit = async (e) => {
@@ -23,10 +24,15 @@ const handleFormSubmit = async (e) => {
       return;
     }
     insertMarkup(results);
+
+    // clear input field and make active "show trending" button
     document.querySelector('#searchField').value = '';
+    showTrendingBtn.disabled = false;
+
+    showTitleForListOfResults();
   } catch (error) {
-    console.log('opp');
+    throw new Error(error);
   }
 };
 
-searchField.addEventListener('submit', handleFormSubmit);
+searchForm.addEventListener('submit', handleFormSubmit);

@@ -1,14 +1,19 @@
 // import {MovieApi} from './service/api.js';
 import {TrendingMovies} from './service/api.js';
 import {insertMarkup} from './utils.js';
+import {showTitleForListOfResults} from './utils.js';
 
 const trendingMovies = new TrendingMovies();
 // const movieApi = new MovieApi();
 
 // console.log(fetchTrendingMovies());
 
-const showTrendingBtn = document.querySelector('.show-trending__btn');
-const hideTrendingBtn = document.querySelector('.hide-trending__btn');
+export const showTrendingBtn = document.querySelector(
+  '.show-trending__btn'
+);
+// export const hideTrendingBtn = document.querySelector(
+//   '.hide-trending__btn'
+// );
 
 const handleShowTrending = async (e) => {
   e.preventDefault();
@@ -22,7 +27,11 @@ const handleShowTrending = async (e) => {
     }
     insertMarkup(results);
 
-    hideTrendingBtn.disabled = false;
+    showTitleForListOfResults('trending');
+
+    console.log(results);
+
+    // hideTrendingBtn.disabled = false;
   } catch (error) {
     console.log('oops');
   }

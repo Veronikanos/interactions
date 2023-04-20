@@ -18,10 +18,12 @@ export const handleClickToUserItem = async (e) => {
       getIdFromClickedElement
     );
     const feedbacksContainerElement =
-      document.querySelector('.detailed-info');
+      document.querySelector('.feedbacks');
 
-    if (!results.length) {
-      feedbacksContainerElement.innerHTML = 'No feedbacks yet';
+    if (results.length === 0) {
+      feedbacksContainerElement.innerHTML =
+        'No feedbacks yet from this customer';
+      return;
     }
 
     console.log(results);

@@ -1,8 +1,17 @@
 li {
   padding: 10px;
-  background-color: darkcyan;
   margin-bottom: 10px;
+  border: 1px solid darkcyan;
+}
+
+.search-results li {
+  background-color: darkcyan;
+  transition: background-color 0.25s ease-in-out;
   cursor: pointer;
+}
+
+.search-results li:hover {
+  background-color: paleturquoise;
 }
 
 .container {
@@ -13,4 +22,8 @@ li {
 
 .container > * {
   width: 50%;
+}
+
+.feedbacks {
+  padding-top: 15px;
 }

@@ -1,16 +1,17 @@
-import './trending-movies.js';
-import './search-form.js';
-import {MovieApi} from './service/api.js';
+import './initPage.js';
+import './invitedGuests.js';
+import './inputForm.js';
 
-export const movieApi = new MovieApi();
+// jsonApi
+//   .getUsers()
+//   .then((posts) => console.log(posts))
+//   .catch((error) => console.error(error));
 
-window.addEventListener('DOMContentLoaded', async () => {
-  // if (!movieApi) {
-  //   movieApi = new MovieApi();
-  // }
-  // create guest session so the user can rate movies
-  await movieApi.fetchGuestSessionId();
-  const res = await movieApi.rateMovie(640146, 9);
-  // console.log(res);
-});
-// https://api.themoviedb.org/3/movie/640145/rating?api_key=2d95e97f255e7635245c1980eab541d3
+// jsonApi
+//   .getComments()
+//   .then((comments) => console.log(comments))
+//   .catch((error) => console.error(error));
+// jsonApi
+//   .addUser({name: 'Nika', age: 31})
+//   .then((comments) => console.log(comments))
+//   .catch((error) => console.error(error));

@@ -1,18 +1,18 @@
-import {movieApi} from './script.js';
+// import {jsonApi} from './script.js';
 
-export const handleClickToMovieItem = (e) => {
-  e.preventDefault();
+// export const handleClickToMovieItem = (e) => {
+//   e.preventDefault();
 
-  const getIdFromClickedElement = e.target.closest('li').id;
-  console.log(getIdFromClickedElement);
+//   const getIdFromClickedElement = e.target.closest('li').id;
+//   console.log(getIdFromClickedElement);
 
-  try {
-    const res = movieApi.getMovieDetailsByID(getIdFromClickedElement);
-    console.log(res);
-  } catch (error) {
-    throw new Error(error);
-  }
-};
+//   try {
+//     const res = jsonApi.getMovieDetailsByID(getIdFromClickedElement);
+//     console.log(res);
+//   } catch (error) {
+//     throw new Error(error);
+//   }
+// };
 
 export const insertMarkup = (res) => {
   const showTrendingContainer =
@@ -22,19 +22,19 @@ export const insertMarkup = (res) => {
   // showTrendingContainer.innerHTML = '';
 
   const markup = [];
-  res.map((movie) => {
+  res.map(({name, id, phone}) => {
     markup.push(
-      `<li id=${movie.id}><a href=''>${movie.title}</a></li>`
+      `<li id=${id}>${name}</ol>`
       //  markup.push(`<li id=${movie.id}>${movie.title}
     );
   });
 
   showTrendingContainer.innerHTML = markup.join('');
 
-  showTrendingContainer.addEventListener(
-    'click',
-    handleClickToMovieItem
-  );
+  // showTrendingContainer.addEventListener(
+  //   'click',
+  //   handleClickToMovieItem
+  // );
 };
 
 export const showTitleForListOfResults = (type) => {

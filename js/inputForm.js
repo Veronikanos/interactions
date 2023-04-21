@@ -1,5 +1,5 @@
 import {CustomError} from './errors.js';
-import {jsonApi} from './invitedGuests.js';
+import {jsonApi} from './listOfCustomers.js';
 
 const handleFormSubmit = async (e) => {
   e.preventDefault();
@@ -8,9 +8,6 @@ const handleFormSubmit = async (e) => {
 
   if (!query) {
     throw new CustomError('Empty input');
-    // alert('empty input');
-    // console.log('empty input');
-    // return;
   }
 
   try {
@@ -30,11 +27,8 @@ const handleFormSubmit = async (e) => {
 
     document.querySelector('#searchField').value = '';
   } catch (error) {
-    if (error instanceof CustomError) {
-      throw error;
-    } else {
-      throw new CustomError('It is impossible to add a new user');
-    }
+    console.log(error.message);
+    alert(error.message);
   }
 };
 

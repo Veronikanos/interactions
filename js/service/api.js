@@ -21,11 +21,10 @@ class JSONPlaceholderAPI {
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;
-      }
-      if (error instanceof SyntaxError) {
-        throw new CustomError('Syntax Error');
       } else {
-        throw new CustomError('Failed to get data');
+        throw new CustomError(
+          'Failed to get data, request in unsuccessful'
+        );
       }
     }
   }
@@ -41,52 +40,51 @@ class JSONPlaceholderAPI {
       });
       if (!response.ok) {
         throw new CustomError(
-          `Error with status: ${response.status}`,
-          response.status
+          'Problems with sending a request. There is wrong URL or network connection issues.'
         );
       }
       const res = await response.json();
       return res;
     } catch (error) {
-      ////////////////////////
-      // if (error instanceof CustomError) {
-      //   console.error(`Custom error: ${error.message} with code: ${error.code}`);
-      // } else {
-      //   console.error('Unexpected error:', error);
-      // }
-      throw new CustomError('Failed to post data', error.code);
+      if (error instanceof CustomError) {
+        throw error;
+      } else {
+        throw new CustomError(
+          'Failed to add data, request in unsuccessful'
+        );
+      }
     }
   }
 }
 
-export class Guests extends JSONPlaceholderAPI {
+export class Customers extends JSONPlaceholderAPI {
   constructor() {
     super('https://jsonplaceholder.typicode.com');
-    this.allGuests = [];
+    this.allCustomers = [];
   }
 
-  get guestsList() {
-    return this.allGuests;
+  get customersList() {
+    return this.allCustomers;
   }
 
-  addGuest(newGuest) {
+  addCustomerToList(newGuest) {
     const user = {
       name: newGuest.name,
       id: newGuest.id,
     };
-    this.allGuests.push(user);
+    this.allCustomers.push(user);
   }
 
-  async getUsers() {
+  async getCustomers() {
     try {
       const result = await this.get('/users');
-      result.forEach((user) => this.addGuest(user));
-      return this.guestsList;
+      result.forEach((user) => this.addCustomerToList(user));
+      return this.customersList;
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;
       } else {
-        new CustomError('Enable to get all users list');
+        new CustomError('Failed to get list of users');
       }
     }
   }
@@ -94,7 +92,7 @@ export class Guests extends JSONPlaceholderAPI {
   async addUser(body = null) {
     try {
       const user = await this.post('/users', body);
-      this.addGuest(user);
+      this.addCustomerToList(user);
       return user;
     } catch (error) {
       if (error instanceof CustomError) {
@@ -110,8 +108,11 @@ export class Guests extends JSONPlaceholderAPI {
       const posts = await this.get(`/users/${userId}/posts`);
       return posts;
     } catch (error) {
-      console.error(error);
-      // throw new CustomError();
+      if (error instanceof CustomError) {
+        throw error;
+      } else {
+        new CustomError('Failed to get users posts');
+      }
     }
   }
 }

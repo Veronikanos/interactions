@@ -12,3 +12,7 @@ export class CustomError extends Error {
 // } catch (error) {
 //   console.error(`${error.code}: ${error.message}`);
 // }
+
+export const handleErrors = (message) => {
+  throw new Error(message);
+};

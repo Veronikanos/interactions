@@ -24,7 +24,6 @@ export const handleClickToUserItem = async (e) => {
     const markup = insertMarkup(results);
     feedbacksContainerElement.innerHTML = markup.join('');
   } catch (error) {
-    console.log(error.message);
     alert(error.message);
   }
 };
@@ -43,7 +42,6 @@ const handleShowCustomersList = async () => {
       handleClickToUserItem
     );
   } catch (error) {
-    console.log(error.message);
     alert(error.message);
   }
 };

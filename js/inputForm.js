@@ -1,4 +1,3 @@
-import {CustomError} from './errors.js';
 import {jsonApi} from './listOfCustomers.js';
 
 const handleFormSubmit = async (e) => {
@@ -6,14 +5,15 @@ const handleFormSubmit = async (e) => {
 
   const query = e.target.formInput.value;
 
-  if (!query) {
-    throw new CustomError('Empty input');
+  if (!query.trim()) {
+    document.querySelector('#searchField').value = '';
+    document.querySelector('.error-text').innerHTML =
+      'Input can not be empty';
+    return;
   }
 
   try {
     const result = await jsonApi.addUser(query.trim().toLowerCase());
-    console.log(result);
-
     const showTrendingContainer =
       document.querySelector('.search-results');
 
@@ -24,10 +24,9 @@ const handleFormSubmit = async (e) => {
       'beforeend',
       `<li id=${generateNextId}>${result.name}</li>`
     );
-
+    document.querySelector('.error-text').innerHTML = '';
     document.querySelector('#searchField').value = '';
   } catch (error) {
-    console.log(error.message);
     alert(error.message);
   }
 };

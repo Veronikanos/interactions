@@ -27,3 +27,8 @@ li {
 .feedbacks {
   padding-top: 15px;
 }
+
+.error-text {
+  height: 20px;
+  color: brown;
+}

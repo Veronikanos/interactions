@@ -9,7 +9,6 @@ class JSONPlaceholderAPI {
   async get(path) {
     try {
       const response = await fetch(`${this.baseUrl}${path}`);
-      console.log(response);
 
       if (!response.ok) {
         throw new CustomError(

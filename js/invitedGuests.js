@@ -1,3 +1,4 @@
+import {CustomError} from './errors.js';
 import {Guests} from './service/api.js';
 import {insertMarkup} from './utils.js';
 
@@ -11,7 +12,7 @@ export const handleClickToUserItem = async (e) => {
   e.preventDefault();
 
   const getIdFromClickedElement = e.target.closest('li').id;
-  console.log(getIdFromClickedElement);
+  // console.log(getIdFromClickedElement);
 
   try {
     const results = await jsonApi.getUserPosts(
@@ -26,7 +27,7 @@ export const handleClickToUserItem = async (e) => {
       return;
     }
 
-    console.log(results);
+    // console.log(results);
 
     const markup = insertMarkup(results);
     feedbacksContainerElement.innerHTML = markup.join('');
@@ -50,7 +51,8 @@ const handleShowGuestsList = async () => {
       handleClickToUserItem
     );
   } catch (error) {
-    console.log('oops');
+    console.log(error.message);
+    alert(error.message);
   }
 
   // trendingMovies.getTrendingMovies().then(({results}) => {

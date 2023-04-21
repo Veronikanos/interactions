@@ -1,9 +1,9 @@
 export class CustomError extends Error {
-  constructor(message, code) {
+  constructor(message) {
     super(message);
-    this.name = this.constructor.name;
-    this.code = code;
-    Error.captureStackTrace(this, this.constructor);
+    this.name = 'CustomError';
+    // this.code = code;
+    // Error.captureStackTrace(this, this.constructor);
   }
 }
 

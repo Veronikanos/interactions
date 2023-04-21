@@ -9,16 +9,24 @@ class JSONPlaceholderAPI {
   async get(path) {
     try {
       const response = await fetch(`${this.baseUrl}${path}`);
+      console.log(response);
 
       if (!response.ok) {
-        throw new Error(`Error with status: ${response.status}`);
+        throw new CustomError(
+          'Problems with sending a request. There is wrong URL or network connection issues.'
+        );
       }
-
       const res = await response.json();
       return res;
     } catch (error) {
-      console.error(error);
-      throw new CustomError();
+      if (error instanceof CustomError) {
+        throw error;
+      }
+      if (error instanceof SyntaxError) {
+        throw new CustomError('Syntax Error');
+      } else {
+        throw new CustomError('Failed to get data');
+      }
     }
   }
 
@@ -32,13 +40,21 @@ class JSONPlaceholderAPI {
         body: JSON.stringify({name: data}),
       });
       if (!response.ok) {
-        throw new Error(`Error with status: ${response.status}`);
+        throw new CustomError(
+          `Error with status: ${response.status}`,
+          response.status
+        );
       }
       const res = await response.json();
       return res;
     } catch (error) {
-      console.error(error);
-      throw new CustomError();
+      ////////////////////////
+      // if (error instanceof CustomError) {
+      //   console.error(`Custom error: ${error.message} with code: ${error.code}`);
+      // } else {
+      //   console.error('Unexpected error:', error);
+      // }
+      throw new CustomError('Failed to post data', error.code);
     }
   }
 }
@@ -67,8 +83,11 @@ export class Guests extends JSONPlaceholderAPI {
       result.forEach((user) => this.addGuest(user));
       return this.guestsList;
     } catch (error) {
-      console.error(error);
-      throw new CustomError();
+      if (error instanceof CustomError) {
+        throw error;
+      } else {
+        new CustomError('Enable to get all users list');
+      }
     }
   }
 
@@ -78,8 +97,11 @@ export class Guests extends JSONPlaceholderAPI {
       this.addGuest(user);
       return user;
     } catch (error) {
-      console.error(error);
-      throw new CustomError();
+      if (error instanceof CustomError) {
+        throw error;
+      } else {
+        new CustomError('Enable to add new user');
+      }
     }
   }
 
@@ -89,7 +111,7 @@ export class Guests extends JSONPlaceholderAPI {
       return posts;
     } catch (error) {
       console.error(error);
-      throw new CustomError();
+      // throw new CustomError();
     }
   }
 }

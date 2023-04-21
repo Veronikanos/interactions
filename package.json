@@ -4,7 +4,8 @@
   "description": "Task for TechMagic Academy",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "live-server"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Veronikanos/interactions/issues"
   },
-  "homepage": "https://github.com/Veronikanos/interactions#readme"
+  "homepage": "https://github.com/Veronikanos/interactions#readme",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
 }
